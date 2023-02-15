@@ -3,8 +3,9 @@ package com.example.webflux.controller;
 import com.example.webflux.event.Event;
 
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,15 @@ public class FluxController {
         return Flux.zip(es,interval)
                 .map(tuple->new Event(tuple.getT2()+1,tuple.getT1()))
                 .take(10);
+    }
+
+    // infinite stream
+    @GetMapping("/infinite")
+    Flux<Map<String,Integer>> loopStream(){
+        Stream<Integer> stream = Stream.iterate(0,i->i+1); // infinite loop stream
+
+        return Flux.fromStream(stream.limit(10))
+                .map(i-> Collections.singletonMap("value",i));
     }
 
     private String generateHello() {
