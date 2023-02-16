@@ -52,7 +52,7 @@ public class FluxController {
     Flux<Map<String,Integer>> loopStream(){
         Stream<Integer> stream = Stream.iterate(0,i->i+1); // infinite loop stream
 
-        return Flux.fromStream(stream.limit(10))
+        return Flux.fromStream(stream.limit(10)) // limit 10 (0 - 9)
                 .map(i-> Collections.singletonMap("value",i));
     }
 
