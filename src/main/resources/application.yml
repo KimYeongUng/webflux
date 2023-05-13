@@ -1,0 +1,10 @@
+spring:
+  sql:
+    init:
+      schemaLocations: classpath*:db/h2/schema.sql
+
+logging:
+  level:
+    org:
+      springframework:
+        r2dbc:DEBUG
