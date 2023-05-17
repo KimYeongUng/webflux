@@ -1,7 +1,8 @@
 package com.example.webflux.service;
 
 import com.example.webflux.domain.Data;
-import com.example.webflux.exception.BusinessErrorException;
+import com.example.webflux.dto.DataDto;
+import com.example.webflux.exception.BusinessLogicException;
 import com.example.webflux.exception.ExceptionCode;
 import com.example.webflux.repo.DataRepository;
 import com.example.webflux.utils.CustomBeanUtils;
@@ -42,13 +43,13 @@ public class DataService {
         return repository.findByDataId(dataid)
                 .flatMap(f-> {
                     if (f != null)
-                        return Mono.error(new BusinessErrorException(ExceptionCode.DATA_EXISTS));
+                        return Mono.error(new BusinessLogicException(ExceptionCode.DATA_EXISTS));
                     return Mono.empty();
                 });
     }
 
     private Mono<Data> verifyFindData(Long dataId){
         return repository.findByDataId(dataId)
-                .switchIfEmpty(Mono.error(new BusinessErrorException(ExceptionCode.DATA_NOT_FOUND)));
+                .switchIfEmpty(Mono.error(new BusinessLogicException(ExceptionCode.DATA_NOT_FOUND)));
     }
 }

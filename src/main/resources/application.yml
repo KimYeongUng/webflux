@@ -7,4 +7,6 @@ logging:
   level:
     org:
       springframework:
-        r2dbc:DEBUG
+        DEBUG
+      io.r2dbc.h2.QUERY: DEBUG
+      io.r2dbc.h2.PARAM: DEBUG
